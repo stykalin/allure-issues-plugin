@@ -1,0 +1,7 @@
+id: issues
+name: Issues aggregator
+description: The aggregator adds a issues tab and a widget to the report
+extensions:
+  - com.github.stykalin.allure.issues.IssuesPlugin
+jsFiles:
+  - index.js
