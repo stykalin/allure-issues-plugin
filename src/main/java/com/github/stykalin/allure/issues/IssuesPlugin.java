@@ -118,7 +118,8 @@ public class IssuesPlugin extends CompositeAggregator {
                     .sorted(Comparator.comparing(TreeWidgetItem::getStatistic, comparator()).reversed())
                     .limit(10)
                     .collect(Collectors.toList());
-            return new TreeWidgetData().setItems(items).setTotal(data.getChildren().size());
+            int totalLeafSize = (int) data.getChildren().stream().map(group -> ((TestResultTreeGroup) group).getChildren()).mapToLong(Collection::size).sum();
+            return new TreeWidgetData().setItems(items).setTotal(totalLeafSize);
         }
 
         private static TreeWidgetItem toWidgetItem(final TestResultTreeGroup group) {
