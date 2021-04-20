@@ -22,16 +22,18 @@ dependencies {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        includeEngines = setOf("junit-jupiter")
+    }
 }
 
 tasks.jar {
     manifest {
         attributes(
-            mapOf(
-                "Implementation-Title" to project.name,
-                "Implementation-Version" to allureVersion
-            )
+                mapOf(
+                        "Implementation-Title" to project.name,
+                        "Implementation-Version" to allureVersion
+                )
         )
     }
 }
@@ -62,7 +64,7 @@ tasks.register<Copy>("addToAllure") {
 
         val allureFile = file("$allureDir/config/allure.yml")
         val text = allureFile.readText()
-        val replacedText = text.replace("plugins:", "plugins:\n  - $pluginName")
+        val replacedText = text.replace("(plugins:\\n  - $pluginName)|(plugins:)".toRegex(), "plugins:\n  - $pluginName")
         allureFile.writeText(replacedText)
         println("Congratulations! $pluginName added successfully. Joy!")
     } else {

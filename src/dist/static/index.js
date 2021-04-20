@@ -4,6 +4,9 @@ allure.api.addTranslation('en', {
     tab: {
         issues: {
             name: 'Issues'
+        },
+        no_issues: {
+            name: 'w/o Issues'
         }
     },
     widget: {
@@ -18,6 +21,9 @@ allure.api.addTranslation('ru', {
     tab: {
         issues: {
             name: 'Баги'
+        },
+        no_issues: {
+            name: 'Без багов'
         }
     },
     widget: {
@@ -41,6 +47,22 @@ allure.api.addTab('issues', {
             baseUrl: 'issues',
             url: 'data/issues.json',
             csvUrl: 'data/issues.csv'
+        });
+    })
+});
+
+allure.api.addTab('no_issues', {
+    title: 'tab.no_issues.name', icon: 'fa fa-sun-o',
+    route: 'no_issues(/)(:testGroup)(/)(:testResult)(/)(:testResultTab)(/)',
+    onEnter: (function (testGroup, testResult, testResultTab) {
+        return new allure.components.TreeLayout({
+            testGroup: testGroup,
+            testResult: testResult,
+            testResultTab: testResultTab,
+            tabName: 'tab.no_issues.name',
+            baseUrl: 'no_issues',
+            url: 'data/no-issues.json',
+            csvUrl: 'data/no-issues.csv'
         });
     })
 });
